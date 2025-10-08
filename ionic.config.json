@@ -1,0 +1,7 @@
+{
+  "name": "saas-provider-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
