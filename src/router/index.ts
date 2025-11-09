@@ -1,17 +1,63 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 import HomePage from '../views/HomePage.vue'
+import LoginPage from '../views/auth/LoginPage.vue';
+import MainPage from '../pages/MenuPage.vue';
+import Tabs from '@/pages/Tabs.vue';
 
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    redirect: '/home'
+  { 
+    path: '/', 
+    redirect: '/home' 
+  },
+
+  { 
+    path: '/home', 
+    name: 'Home', 
+    component: HomePage 
+  },
+
+  { 
+    path: '/login', 
+    name: 'Login', 
+    component: () => import('../views/auth/LoginPage.vue')
+  },
+  { 
+    path: '/register', 
+    name: 'Register', 
+    component: () => import('../views/auth/RegisterPage.vue')
   },
   {
-    path: '/home',
-    name: 'Home',
-    component: HomePage
-  }
+    path: '/tabs',
+    component: Tabs,
+    children: [
+      { 
+        path: '', 
+        redirect: '/tabs/menu' 
+      },
+      {
+        path: 'menu',
+        component: () => import('../pages/MenuPage.vue'),
+      },
+      {
+        path: 'pedidos',
+        component: () => import('../pages/PedidosPage.vue'),
+      },
+      {
+        path: 'ventas',
+        component: () => import('../pages/VentasPage.vue'),
+      },
+      {
+        path: 'profile',
+        component: () => import('../pages/ProfilePage.vue'),
+      },
+    ],
+  },
+
+  { 
+    path: '/menu', 
+    redirect: '/tabs/menu' 
+  },
 ]
 
 const router = createRouter({

@@ -1,2 +1,42 @@
-/* For information on how to create your own theme, please see:
-http://ionicframework.com/docs/theming/ */
+:root {
+  /* TODO IMPORTANTE: MANEJAR EL TEMADO Y EL MODO OSCURO/CLARO esto esta asi chatgepeteado temporal*?
+
+  /* Fondo y texto */
+  --ion-background-color: #f6f7f7;
+  --ion-text-color: #1f1f1f;
+
+  /* Marca */
+  --brand: #6f9a88;
+  --brand-contrast: #ffffff;
+  --brand-dark: #314d43;
+
+  /* Ionic primary = tu marca */
+  --ion-color-primary: var(--brand);
+  --ion-color-primary-rgb: 111,154,136;
+  --ion-color-primary-contrast: var(--brand-contrast);
+  --ion-color-primary-contrast-rgb: 255,255,255;
+  --ion-color-primary-shade: #638b7b;
+  --ion-color-primary-tint: #7ca594;
+
+  /* Component tokens útiles */
+  --ion-toolbar-background: transparent;
+  --ion-toolbar-color: var(--ion-text-color);
+  --ion-item-background: #ffffff;
+  --ion-item-color: var(--ion-text-color);
+}
+
+ion-content {
+  padding-top: var(--ion-safe-area-top);
+  padding-bottom: var(--ion-safe-area-bottom);
+}
+
+/* (Opcional) Tema oscuro MANUAL, solo si tú lo activas con body.dark */
+body.dark {
+  --ion-background-color: #0f1412;
+  --ion-text-color: #e9eceb;
+  --ion-item-background: #16201c;
+  --ion-toolbar-color: var(--ion-text-color);
+  --brand-dark: #20362d;
+
+  
+}
