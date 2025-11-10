@@ -1,0 +1,14 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "POS redes",
+	"webDir": "dist",
+	"plugins": {
+		"Keyboard": {
+			"resize": "native",
+			"resizeOnFullScreen": true
+		}
+	},
+	"server": {
+		"url": "http://192.168.0.197:8100"
+	}
+}

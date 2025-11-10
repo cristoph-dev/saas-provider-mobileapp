@@ -2,11 +2,12 @@
   /* TODO IMPORTANTE: MANEJAR EL TEMADO Y EL MODO OSCURO/CLARO esto esta asi chatgepeteado temporal*?
 
   /* Fondo y texto */
-  --ion-background-color: #f6f7f7;
+  --ion-background-color: #ffffff;
   --ion-text-color: #1f1f1f;
+  --ion-safe-area-top: 1.5rem;
 
   /* Marca */
-  --brand: #6f9a88;
+  --brand: #86bc25;
   --brand-contrast: #ffffff;
   --brand-dark: #314d43;
 
@@ -15,7 +16,7 @@
   --ion-color-primary-rgb: 111,154,136;
   --ion-color-primary-contrast: var(--brand-contrast);
   --ion-color-primary-contrast-rgb: 255,255,255;
-  --ion-color-primary-shade: #638b7b;
+  --ion-color-primary-shade: #86bc25;
   --ion-color-primary-tint: #7ca594;
 
   /* Component tokens útiles */
