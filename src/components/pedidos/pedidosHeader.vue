@@ -10,7 +10,7 @@
     </ion-header>
 
 
-    <ion-button v-if="activeTab === 'pedidos'" expand="full"><ion-icon slot="start" :icon="addOutline"/>Nuevo pedido</ion-button>
+    <ion-button v-if="activeTab === 'pedidos'" expand="full" @click="emit('new-order')"><ion-icon slot="start" :icon="addOutline"/>Nuevo pedido</ion-button>
     <ion-item v-if="activeTab === 'pedidos'" lines="none" >
       <ion-chip outline>Todo<ion-badge>0</ion-badge></ion-chip>
       <ion-chip outline>Pendiente<ion-badge color="warning">0</ion-badge></ion-chip> 
@@ -32,16 +32,36 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonChip, IonToolbar, IonTitle, IonHeader, IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonContent,IonAccordion, IonAccordionGroup, IonItem, IonLabel, IonBadge, IonInput, IonPopover, IonList, IonThumbnail, IonImg, IonModal, IonButton } from '@ionic/vue';
-import { searchSharp, menuOutline, ellipsisVertical, addOutline, chevronCollapseOutline, chevronExpandOutline, chevronDownOutline, chevronUpOutline, copyOutline, trashOutline, closeOutline, restaurantOutline} from 'ionicons/icons';
-import DomicilioView from '@/views/pedidos/PedidosView.vue';
-import MesasView from '@/views/pedidos/MesasView.vue';
+import {
+  searchSharp, menuOutline, ellipsisVertical, addOutline, chevronCollapseOutline,
+  chevronExpandOutline, chevronDownOutline, chevronUpOutline, copyOutline,
+  trashOutline, closeOutline, restaurantOutline
+} from 'ionicons/icons'
+import DomicilioView from '@/views/pedidos/PedidosView.vue'
+import MesasView from '@/views/pedidos/MesasView.vue'
+import OrderModal from '@/components/pedidos/modals/orderModal.vue'   
 import { ref } from 'vue'
+
+// modal
+
+interface Order {
+  id: number
+  orderType: string
+  date: string
+  time: string
+  duration: string
+  status: string
+  paymentMethod: string
+  channel: string
+  totalUSD: number
+  totalBs: string
+}
 
 const activeTab = ref<'pedidos' | 'mesas'>('pedidos')
 
 const emit = defineEmits<{
   (e: 'update:activeTab', value: 'pedidos'|'mesas'): void
+  (e: 'new-order'): void
 }>()
 
 function set(v: 'pedidos'|'mesas') {
@@ -49,6 +69,7 @@ function set(v: 'pedidos'|'mesas') {
   emit('update:activeTab', v)  
 }
 
+// salas 
 
 
 const salas = ref([
@@ -58,6 +79,17 @@ const salas = ref([
 ])
 
 const salaActiva = ref(1)
+
+
+const isOrderModalOpen = ref(false)
+const modalMode = ref<'new' | 'view'>('new')
+const selectedOrder = ref<Order | null>(null)
+
+function openAddProduct() {
+  modalMode.value = 'new'
+  selectedOrder.value = null      // pedido vacío / nuevo
+  isOrderModalOpen.value = true   // abre el modal
+}
 
 </script>
 

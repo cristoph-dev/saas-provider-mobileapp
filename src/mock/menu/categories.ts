@@ -57,4 +57,18 @@ export const categories: Category[] = [
       },
     ],
   },
+  {
+    id: 3,
+    name: "Bebidas",
+    maxProducts: 20,
+    products: [
+      {
+        id: 1,
+        name: "coca cola",
+        price: 22,
+        currency: "Bs",
+        imageKey: "bebida1",
+      },
+    ],
+  },
 ];
