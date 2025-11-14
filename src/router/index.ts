@@ -42,19 +42,19 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'menu',
-        component: () => import('../views//pages/MenuPage.vue'),
+        component: () => import('../views/pages/MenuPage.vue'),
       },
       {
         path: 'pedidos',
-        component: () => import('../views//pages/PedidosPage.vue'),
+        component: () => import('../views/pages/PedidosPage.vue'),
       },
       {
         path: 'ventas',
-        component: () => import('../views//pages/VentasPage.vue'),
+        component: () => import('../views/pages/VentasPage.vue'),
       },
       {
         path: 'profile',
-        component: () => import('../views//pages/ProfilePage.vue'),
+        component: () => import('../views/pages/ProfilePage.vue'),
       },
     ],
   },

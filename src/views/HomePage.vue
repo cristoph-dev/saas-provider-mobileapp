@@ -11,7 +11,6 @@
         :navigation="false"
         :autoplay="{ delay: 5000, disableOnInteraction: true }"
       >
-
         <SwiperSlide class="slide">
           <h2 class="slide-title">Crea tu menú facilmente</h2>
           <p class="slide-desc">Diseña y actualiza tu carta en minutos. Agrega productos, precios y fotos sin complicaciones para ofrecer una experiencia moderna y atractiva a tus clientes.</p>

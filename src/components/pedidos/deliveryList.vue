@@ -85,18 +85,7 @@ import { Delivery } from '@/mock/deliveries/deliveries';
 // import { orderModal } from '@/components/pedidos/modals/orderModal.vue'
 import { ref } from 'vue';
 
-interface Order {
-  id: number
-  tipoPedido: string
-  fecha: string
-  hora: string
-  tiempo: string
-  estado: string
-  metodoPago: string
-  canal: string
-  totalUSD: number
-  totalBs: string
-}
+import type { Order } from '@/mock/deliveries/order';
 
 const emit = defineEmits<{
   (e: 'open-order', order: Order): void

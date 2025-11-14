@@ -11,6 +11,11 @@
   --brand-contrast: #ffffff;
   --brand-dark: #314d43;
 
+
+  /* colores modal */
+  --btn: #056bfb;
+  --btn-success: #25d92b;
+
   /* Ionic primary. modo de uso  */
   --ion-color-primary: var(--brand);
   --ion-color-primary-rgb: 111,154,136;
