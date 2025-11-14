@@ -2,8 +2,8 @@ import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 import HomePage from '../views/HomePage.vue'
 import LoginPage from '../views/auth/LoginPage.vue';
-import MainPage from '../pages/MenuPage.vue';
-import Tabs from '@/pages/Tabs.vue';
+import MainPage from '../views/pages/MenuPage.vue';
+import Tabs from '@/views/pages/Tabs.vue';
 
 const routes: Array<RouteRecordRaw> = [
   { 
@@ -27,6 +27,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Register', 
     component: () => import('../views/auth/RegisterPage.vue')
   },
+  { 
+    path: '/recover', 
+    name: 'Recover', 
+    component: () => import('../views/auth/RecoverPassPage.vue')
+  },
   {
     path: '/tabs',
     component: Tabs,
@@ -37,19 +42,19 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'menu',
-        component: () => import('../pages/MenuPage.vue'),
+        component: () => import('../views//pages/MenuPage.vue'),
       },
       {
         path: 'pedidos',
-        component: () => import('../pages/PedidosPage.vue'),
+        component: () => import('../views//pages/PedidosPage.vue'),
       },
       {
         path: 'ventas',
-        component: () => import('../pages/VentasPage.vue'),
+        component: () => import('../views//pages/VentasPage.vue'),
       },
       {
         path: 'profile',
-        component: () => import('../pages/ProfilePage.vue'),
+        component: () => import('../views//pages/ProfilePage.vue'),
       },
     ],
   },

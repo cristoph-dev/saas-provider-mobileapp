@@ -1,7 +1,7 @@
 <template>
-    <ion-header>
+    <ion-header class="ion-no-border">
         <ion-toolbar>
-            <h2 slot="start">Menu {{ items_amount }}</h2>
+            <h2 slot="start">Menu ({{ items_amount }})</h2>
             <div class="contenainer-profile" slot="end">
                  <ion-icon :icon="personCircleSharp" class="profile-icon"></ion-icon> <!--TODO icono temporal, aqui deberia poder subirse una imagen con un script -->
             </div>
@@ -20,21 +20,16 @@
 
 ion-header {
     position: relative;
-    height: 8rem;
     text-align: center;
-
 }
 
 ion-toolbar {
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  height: 100%;
+  --padding-start: var(--page-horizontal-padding);
+  --padding-end: var(--page-horizontal-padding);
   padding-bottom: 0.5rem;
-}
-
-ion-toolbar {
-    padding-top: 6rem;
 }
 
 h2 {

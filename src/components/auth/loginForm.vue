@@ -38,9 +38,16 @@
             />
         </ion-item>
 
-        <div>
-            <a href="/register">Olvide la contraseña</a>
+        <div class="container-register">
+            <a href="/recover">Olvide la contraseña</a>
         </div>
+
+        <div class="container-register">
+            <span class="helper-text">
+              ¿Aun no tienes una cuenta?
+              <a href="/register">Registrate</a>
+            </span>
+          </div>
         </ion-list>
     </div>
     </ion-content>
@@ -78,7 +85,7 @@ import { chevronBackOutline } from "ionicons/icons";
 import  logoRedesIp  from '@/assets/Redesip-logo.png'
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { UsersService } from '@/mock/usersService';
+import { UsersService } from '@/mock/auth/usersService';
 
 const router = useRouter();
 
@@ -141,8 +148,14 @@ async function onSubmit() {
   height: 3.5rem;
   object-fit: contain;
 }
+
+.container-register {
+  margin-top: 1.5rem;
+}
+
 a {
     padding-top: 1.5rem;
+    text-decoration: none;
 }
 
 
@@ -156,6 +169,7 @@ a {
     margin: 0;
     height: 4rem;
 }
+
 
 
 </style>

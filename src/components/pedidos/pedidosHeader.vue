@@ -1,10 +1,10 @@
 <template>
-  <ion-header>
+  <ion-header class="ion-no-border">
       <ion-toolbar>
           <ion-item  lines="none" class="toolbar-buttons">
-            <ion-button @click="set('pedidos')" id="button-left-part">Pedidos</ion-button>
-            <ion-button @click="set('mesas')" id="button-right-part">Mesas</ion-button>
-          <ion-button slot="end" size="small" shape="round"><ion-icon  slot="icon-only" :icon="ellipsisVertical"/></ion-button>
+            <ion-button @click="set('pedidos')" id="button-left-part" color="primary">Pedidos</ion-button>
+            <ion-button @click="set('mesas')" id="button-right-part" color="primary">Mesas</ion-button>
+          <ion-button slot="end" size="small" shape="round" color="primary"><ion-icon  slot="icon-only" :icon="ellipsisVertical"/></ion-button>
           </ion-item>
       </ion-toolbar>
     </ion-header>
@@ -65,24 +65,7 @@ const salaActiva = ref(1)
 
 <style scoped>
 
-ion-header {
-    position: relative;
-    height: 8rem;
-    text-align: center;
 
-}
-
-ion-toolbar {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  height: 100%;
-  padding-bottom: 0.5rem;
-}
-
-ion-toolbar {
-    padding-top: 6rem;
-}
 
 #button-left-part {
   --border-radius: 12px 0 0 12px;

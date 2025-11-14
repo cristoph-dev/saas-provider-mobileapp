@@ -1,17 +1,17 @@
 :root {
-  /* TODO IMPORTANTE: MANEJAR EL TEMADO Y EL MODO OSCURO/CLARO esto esta asi chatgepeteado temporal*?
-
+  /* TODO IMPORTANTE: MANEJAR EL TEMADO Y EL MODO OSCURO/CLARO */
   /* Fondo y texto */
   --ion-background-color: #ffffff;
   --ion-text-color: #1f1f1f;
   --ion-safe-area-top: 1.5rem;
+  --page-horizontal-padding: 0.5rem;
 
-  /* Marca */
+  /* 3 colores branding */
   --brand: #86bc25;
   --brand-contrast: #ffffff;
   --brand-dark: #314d43;
 
-  /* Ionic primary = tu marca */
+  /* Ionic primary. modo de uso  */
   --ion-color-primary: var(--brand);
   --ion-color-primary-rgb: 111,154,136;
   --ion-color-primary-contrast: var(--brand-contrast);
@@ -19,7 +19,7 @@
   --ion-color-primary-shade: #86bc25;
   --ion-color-primary-tint: #7ca594;
 
-  /* Component tokens útiles */
+  /* Component tokens utiles */
   --ion-toolbar-background: transparent;
   --ion-toolbar-color: var(--ion-text-color);
   --ion-item-background: #ffffff;
@@ -29,15 +29,15 @@
 ion-content {
   padding-top: var(--ion-safe-area-top);
   padding-bottom: var(--ion-safe-area-bottom);
+  --padding-start: var(--page-horizontal-padding);
+  --padding-end: var(--page-horizontal-padding);
 }
 
-/* (Opcional) Tema oscuro MANUAL, solo si tú lo activas con body.dark */
+/*Tema oscuro (arreglar)*/
 body.dark {
   --ion-background-color: #0f1412;
   --ion-text-color: #e9eceb;
   --ion-item-background: #16201c;
   --ion-toolbar-color: var(--ion-text-color);
   --brand-dark: #20362d;
-
-  
 }

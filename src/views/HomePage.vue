@@ -32,7 +32,7 @@
       </Swiper>
 
       <div class="ion-text-center">
-        <ion-button routerLink="/login" routerDirection="forward" style="--background:#000; --color:#fff;">EMPEZAR AHORA</ion-button> <!-- TODO KYC para medio personalizar la app -->
+        <ion-button routerLink="/register" routerDirection="forward" color="primary">EMPEZAR AHORA</ion-button> <!-- TODO KYC para medio personalizar la app -->
         <ion-button routerLink="/login" routerDirection="forward" fill="clear" expand="full" style="--color:#000;">YA TENGO UNA CUENTA</ion-button>
       </div>
 

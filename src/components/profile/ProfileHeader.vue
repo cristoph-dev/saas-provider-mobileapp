@@ -1,5 +1,5 @@
 <template>
-    <ion-header>
+    <ion-header class="ion-no-border">
         <ion-card>
             <ion-card-header>
             <ion-card-title>Card Title</ion-card-title>
@@ -16,3 +16,7 @@
 <script setup lang="ts">
 import { IonPage, IonToolbar, IonTitle, IonHeader, IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel, IonContent, IonCard, IonCardHeader, IonCardSubtitle, IonCardContent } from '@ionic/vue';
 </script>
+
+<style scoped>
+
+</style>
