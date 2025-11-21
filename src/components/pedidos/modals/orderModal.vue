@@ -3,7 +3,7 @@
 
 <template>
   <ion-modal :is-open="isOpen" @didDismiss="close">
-    <template v-if="mode === 'add-product'">
+    <template v-if="mode === 'new'">
         <ion-header class="ion-no-border" >
             <ion-toolbar color="warning">
  
@@ -56,12 +56,13 @@
 import { bagHandleOutline, chevronBackOutline, pencilSharp, calendarOutline, banOutline} from 'ionicons/icons';
 import { ref, computed } from 'vue';
 import type { Order } from '@/mock/deliveries/order'
+import type { Delivery } from '@/mock/deliveries/deliveries'
 
 
 const props = defineProps<{
+  order: Delivery | null
+  mode: "new" | "view"
   isOpen: boolean
-  order: Order | null
-  mode: 'view' | 'add-product'
 }>()
 
 const emit = defineEmits<{
@@ -74,7 +75,16 @@ function close() {
 
 //
 
-const tipoPedido = ref('En el local')
+const tipoPedido = computed({
+  get() {
+    return props.order?.deliveryType ?? "En el local"
+  },
+  set(value: "En el local" | "Para llevar") {
+    if (props.order) {
+      props.order.deliveryType = value
+    }
+  }
+})
 
 function toggleTipo() {
   tipoPedido.value =

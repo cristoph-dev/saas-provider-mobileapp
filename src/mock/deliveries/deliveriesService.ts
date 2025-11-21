@@ -1,18 +1,20 @@
-import { deliveries, type Delivery } from "./deliveries"
+import { deliveries, type Delivery } from "./deliveries";
+import type { CategoryProduct } from "@/mock/menu/categories";
+
 
 export const DeliveryService = {
   getAll(): Delivery[] {
-    return deliveries
+    return deliveries;
   },
 
   getById(id: number): Delivery | undefined {
-    return deliveries.find(d => d.id === id)
+    return deliveries.find(d => d.id === id);
   },
 
-  create(type: "En el local" | "Para llevar" = "En el local"): Delivery {
-    const now = new Date()
+  create(type: "En el local" | "Para llevar"): Delivery {
+    const now = new Date();
 
-    const newDelivery: Delivery = {
+    const nuevo: Delivery = {
       id: deliveries.length + 1,
       deliveryType: type,
       date: now.toLocaleDateString("es-CL"),
@@ -23,17 +25,33 @@ export const DeliveryService = {
       channel: "PDV",
       totalUSD: 0,
       totalBs: "0",
-    }
+      products: []
+    };
 
-    deliveries.push(newDelivery)
-    return newDelivery
+    deliveries.push(nuevo);
+    return nuevo;
   },
 
-  update(id: number, data: Partial<Delivery>) {
-    const d = deliveries.find(x => x.id === id)
-    if (!d) return
+addProduct(delivery: Delivery, product: CategoryProduct) {
+    const existing = delivery.products.find(p => p.id === product.id)
 
-    Object.assign(d, data)
-    return d
+    if (existing) {
+      existing.qty++
+    } else {
+      delivery.products.push({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        currency: product.currency,
+        qty: 1
+      })
+    }
+
+    // actualizar totales
+    const totalBs = delivery.products
+      .filter(p => p.currency === "Bs")
+      .reduce((sum, p) => sum + p.price * p.qty, 0)
+
+    delivery.totalBs = totalBs.toFixed(2)
   }
-}
+};

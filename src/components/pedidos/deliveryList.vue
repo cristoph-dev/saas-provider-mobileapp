@@ -1,5 +1,5 @@
 <template>
-    <div class="ion-padding">
+  <div class="ion-padding">
     <ion-list lines="none">
       <ion-item
         v-for="pedido in pedidos"
@@ -9,57 +9,53 @@
         class="pedido-item"
         @click="abrirPedido(pedido)"
       >
-        <!--Borde dinamico de la izquierda-->
         <div
           class="pedido-card"
           :style="{
             borderLeftColor:
-              pedido.estado === 'En preparación'
+              pedido.state === 'En preparación'
                 ? '#00c741'
                 : '#f4a91e',
           }"
         >
           <div class="top">
-            <div class="tag">#{{ pedido.id }} {{ pedido.tipoPedido }}</div>
+            <div class="tag">#{{ pedido.id }} {{ pedido.deliveryType }}</div>
 
             <div class="timer">
               <ion-icon name="time-outline" class="timer-icon"></ion-icon>
-              <span>{{ pedido.tiempo }}</span>
+              <span>{{ pedido.duration }}</span>
             </div>
           </div>
 
           <div class="middle">
             <div class="chips">
-              <!-- PDV -->
-              <div class="chip chip-outline">{{ pedido.canal }}</div>
 
-              <!-- Estado (Pendiente/En preparacion) -->
+              <div class="chip chip-outline">{{ pedido.channel }}</div>
+
               <div
-                v-if="pedido.estado === 'Pendiente'"
+                v-if="pedido.state === 'Pendiente'"
                 class="chip chip-yellow-text-white"
               >
-                {{ pedido.estado }}
-              </div>
-              <div
-                v-else-if="pedido.estado === 'En preparación'"
-                class="chip chip-green"
-              >
-                {{ pedido.estado }}
+                {{ pedido.state }}
               </div>
 
-              <!-- Pago (Pagado/No pagado) -->
               <div
-                v-if="pedido.metodoPago === 'Pagado'"
+                v-else-if="pedido.state === 'En preparación'"
+                class="chip chip-green"
+              >
+                {{ pedido.state }}
+              </div>
+
+              <div
+                v-if="pedido.payment === 'Pagado'"
                 class="chip chip-blue"
               >
-                {{ pedido.metodoPago }}
+                {{ pedido.payment }}
               </div>
-              <div
-                v-else
-                class="chip chip-yellow"
-              >
-                {{ pedido.metodoPago }}
+              <div v-else class="chip chip-yellow">
+                {{ pedido.payment }}
               </div>
+
             </div>
 
             <div class="amounts">
@@ -69,52 +65,55 @@
           </div>
 
           <div class="bottom">
-            {{ pedido.hora }} - {{ pedido.fecha }}
+            {{ pedido.time }} - {{ pedido.date }}
           </div>
         </div>
       </ion-item>
     </ion-list>
-    </div>
-    <OrderModal v-model:isOpen="isOrderModalOpen" :order="selectedOrder" :mode="modalMode"/>
+  </div>
+
+  <OrderModal
+    v-model:isOpen="isOrderModalOpen"
+    :order="selectedOrder"
+    :mode="modalMode"
+  />
 </template>
 
 <script setup lang="ts">
 import { IonContent, IonItem, IonList, IonIcon } from '@ionic/vue'
-import { useDeliveries } from '@/mock/deliveries/deliveriesService';
-import { Delivery } from '@/mock/deliveries/deliveries';
-// import { orderModal } from '@/components/pedidos/modals/orderModal.vue'
-import { ref } from 'vue';
-
-import type { Order } from '@/mock/deliveries/order';
+import OrderModal from '@/components/pedidos/modals/orderModal.vue'
+import type { Delivery } from "@/mock/deliveries/deliveries"
+import { DeliveryService } from '@/mock/deliveries/deliveriesService'
+import { ref, onMounted } from 'vue'
 
 const emit = defineEmits<{
-  (e: 'open-order', order: Order): void
+  (e: "open-order", order: Delivery): void
 }>()
 
-const { getAll } = useDeliveries()
+function abrirPedido(pedido: Delivery) {
+  emit("open-order", pedido)
+}
 
-// Convertimos Delivery → Pedido (mismos nombres del template)
-const pedidos: Order[] = getAll().map((d: Delivery) => ({
-  id: d.id,
-  tipoPedido: d.deliveryType,
-  fecha: d.date,
-  hora: d.time,
-  tiempo: d.duration,
-  estado: d.state,
-  metodoPago: d.payment,
-  canal: d.channel,
-  totalUSD: d.totalUSD,
-  totalBs: d.totalBs,
-}))
+// 🚀 Lista reactiva REAL
+const pedidos = ref<Delivery[]>([])
+
+onMounted(() => {
+  pedidos.value = DeliveryService.getAll()   // ← ESTA LÍNEA FALTABA
+  console.log("PEDIDOS EN DELIVERYLIST:", pedidos.value)
+})
 
 const isOrderModalOpen = ref(false)
-const selectedOrder = ref<Order | null>(null)
-const modalMode = ref<'view' | 'add-product'>('view')
+const selectedOrder = ref<Delivery | null>(null)
+const modalMode = ref<'view' | 'new'>('view')
 
-function abrirPedido(pedido: Order) {
-  emit('open-order', pedido)
+function openLocalModal(pedido: Delivery) {
+  selectedOrder.value = pedido
+  modalMode.value = 'view'
+  isOrderModalOpen.value = true
 }
 </script>
+
+
 
 <style scoped>
 .pedido-item {

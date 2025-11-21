@@ -41,6 +41,7 @@ import DomicilioView from '@/views/pedidos/PedidosView.vue'
 import MesasView from '@/views/pedidos/MesasView.vue'
 import OrderModal from '@/components/pedidos/modals/orderModal.vue'   
 import { ref } from 'vue'
+import { DeliveryService } from '@/mock/deliveries/deliveriesService'
 
 // modal
 
@@ -86,9 +87,14 @@ const modalMode = ref<'new' | 'view'>('new')
 const selectedOrder = ref<Order | null>(null)
 
 function openAddProduct() {
-  modalMode.value = 'new'
-  selectedOrder.value = null      // pedido vacío / nuevo
-  isOrderModalOpen.value = true   // abre el modal
+  // 1. Crear un nuevo delivery vacío
+  const nuevo = DeliveryService.create("En el local")
+
+  // 2. Enviar ese delivery al modal
+  selectedOrder.value = nuevo as any
+
+  modalMode.value = "new"
+  isOrderModalOpen.value = true
 }
 
 </script>

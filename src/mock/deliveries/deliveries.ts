@@ -1,3 +1,5 @@
+import { reactive } from "vue";
+
 export interface Delivery {
     id: number;
     deliveryType: 'Para llevar' | 'En el local';
@@ -9,11 +11,20 @@ export interface Delivery {
     channel: 'PDV' | string;
     totalUSD: number;
     totalBs: string;
+    products: DeliveryProduct[]
 }
 
-export const deliveries: Delivery[] = [
-  // pendiente y no pagado
-    {    
+export interface DeliveryProduct {
+  id: number
+  name: string
+  price: number
+  currency: "Bs" | "USD" | "VES"
+  qty: number
+}
+
+export const deliveries = reactive<Delivery[]>([
+  // #1
+  {    
     id: 1,
     deliveryType: 'Para llevar',
     date: '31/10/25',
@@ -23,10 +34,27 @@ export const deliveries: Delivery[] = [
     payment: 'Pagado',
     channel: 'PDV',
     totalUSD: 10,
-    totalBs: '2,170',
-    },
-    {
-    // Pendiente y pagado
+    totalBs: '2170',
+    products: [
+      {
+        id: 1,
+        name: "Arepa de carne mechada",
+        price: 22,
+        currency: "Bs",
+        qty: 1
+      },
+      {
+        id: 2,
+        name: "Coca Cola",
+        price: 15,
+        currency: "Bs",
+        qty: 2
+      }
+    ]
+  },
+
+  // #2
+  {
     id: 2,
     deliveryType: 'En el local',
     date: '31/10/25',
@@ -36,9 +64,26 @@ export const deliveries: Delivery[] = [
     payment: 'Pagado',
     channel: 'PDV',
     totalUSD: 10,
-    totalBs: '2,170',
+    totalBs: '2790',
+    products: [
+      {
+        id: 10,
+        name: "Pizza de pepperoni",
+        price: 40,
+        currency: "Bs",
+        qty: 1
+      },
+      {
+        id: 11,
+        name: "Jugo natural",
+        price: 18,
+        currency: "Bs",
+        qty: 1
+      }
+    ]
   },
-// En preparacion y no pagado
+
+  // #3
   {
     id: 3,
     deliveryType: 'En el local',
@@ -49,9 +94,26 @@ export const deliveries: Delivery[] = [
     payment: 'No pagado',
     channel: 'PDV',
     totalUSD: 10,
-    totalBs: '2,170',
+    totalBs: '1450',
+    products: [
+      {
+        id: 5,
+        name: "Arepa de queso",
+        price: 20,
+        currency: "Bs",
+        qty: 1
+      },
+      {
+        id: 2,
+        name: "Coca Cola",
+        price: 15,
+        currency: "Bs",
+        qty: 1
+      }
+    ]
   },
-// En preparacion y pagado
+
+  // #4
   {
     id: 4,
     deliveryType: 'En el local',
@@ -62,8 +124,33 @@ export const deliveries: Delivery[] = [
     payment: 'Pagado',
     channel: 'PDV',
     totalUSD: 10,
-    totalBs: '2,170',
+    totalBs: '3320',
+    products: [
+      {
+        id: 10,
+        name: "Pizza de pepperoni",
+        price: 40,
+        currency: "Bs",
+        qty: 1
+      },
+      {
+        id: 15,
+        name: "Pizza napolitana",
+        price: 35,
+        currency: "Bs",
+        qty: 1
+      },
+      {
+        id: 2,
+        name: "Coca Cola",
+        price: 15,
+        currency: "Bs",
+        qty: 1
+      }
+    ]
   },
+
+  // #5
   {
     id: 5,
     deliveryType: 'En el local',
@@ -74,9 +161,25 @@ export const deliveries: Delivery[] = [
     payment: 'Pagado',
     channel: 'PDV',
     totalUSD: 10,
-    totalBs: '2,170',
+    totalBs: '980',
+    products: [
+      {
+        id: 3,
+        name: "Te frío",
+        price: 12,
+        currency: "Bs",
+        qty: 1
+      },
+      {
+        id: 4,
+        name: "Galletas",
+        price: 8,
+        currency: "Bs",
+        qty: 1
+      }
+    ]
   },
-];
+])
 
 // legacy code
 const pedidos = [
