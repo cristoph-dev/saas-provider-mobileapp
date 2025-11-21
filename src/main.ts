@@ -1,19 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
-import { IonicVue, 
-  IonPage, 
-  IonToolbar, 
-  IonTitle, 
-  IonHeader, 
-  IonTabs, 
-  IonRouterOutlet, 
-  IonTabBar, 
-  IonTabButton, 
-  IonIcon, 
-  IonLabel, 
-  IonContent 
-} from '@ionic/vue'
+import { IonicVue } from '@ionic/vue';
+import * as Ionic from '@ionic/vue';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
@@ -49,17 +38,17 @@ const app = createApp(App)
   .use(IonicVue)
   .use(router);
 
-  app.component('ion-page', IonPage)
-  app.component('ion-toolbar', IonToolbar)
-  app.component('ion-title', IonTitle)
-  app.component('ion-header', IonHeader)
-  app.component('ion-tabs', IonTabs)
-  app.component('ion-router-outlet', IonRouterOutlet)
-  app.component('ion-tab-bar', IonTabBar)
-  app.component('ion-tab-button', IonTabButton)
-  app.component('ion-icon', IonIcon)
-  app.component('ion-label', IonLabel)
-  app.component('ion-content', IonContent)
+// importar todos los iconos 
+import { addIcons } from 'ionicons';
+import * as IonIcons from 'ionicons/icons';
+addIcons(IonIcons as any);
+
+// importacion de todos los componentes de forma global
+Object.entries(Ionic).forEach(([name, component]) => {
+  if (name.startsWith('Ion')) {
+    app.component(name, component as any);
+  }
+});
 
 router.isReady().then(() => {
   app.mount('#app');

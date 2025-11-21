@@ -50,7 +50,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'ventas',
-        component: () => import('../views/pages/VentasPage.vue'),
+        component: () => import('../views/pages/SalesPage.vue'),
       },
       {
         path: 'profile',

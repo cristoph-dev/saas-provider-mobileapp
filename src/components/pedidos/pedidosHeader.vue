@@ -20,7 +20,7 @@
     <ion-item v-else lines="none" >
       <div class="salas-grid">
         <ion-button v-for="sala in salas" :key="sala.id" :class="{ activo: salaActiva === sala.id }" @click="salaActiva = sala.id" class="sala-btn">
-          {{ sala.nombre }}          
+          {{ sala.nombre }}
         </ion-button>
       <ion-button class="sala-btn">
         <ion-icon slot="start" :icon="addOutline" />

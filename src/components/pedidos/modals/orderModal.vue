@@ -1,35 +1,44 @@
+<!-- <div v-if="mode === 'add-product'" class="add-product-wrapper"> -->
+<!-- <div v-else class="order-view-wrapper"> -->
+
 <template>
   <ion-modal :is-open="isOpen" @didDismiss="close">
-    <!-- <div v-if="mode === 'add-product'" class="add-product-wrapper"> -->
+    <template v-if="mode === 'add-product'">
         <ion-header class="ion-no-border" >
             <ion-toolbar color="warning">
+ 
                 <ion-button slot="start" fill="clear" size="small" @click="close()"><ion-icon :icon="chevronBackOutline"/></ion-button>
-                <ion-chip :outline="true">Pedido</ion-chip>           
+                <span>#1</span>
+                <ion-chip   @click="toggleTipo" :outline="true">{{ tipoPedido }}</ion-chip>  
+                <ion-label>| Pendiente</ion-label>
             </ion-toolbar>
         </ion-header>
         <ion-content fullscreen>
-            <ion-item>
-                <ion-chip :outline="true">BDV</ion-chip>
-                <ion-label class="ion-padding">22:30 - 31/10/2025</ion-label>
+            <ion-item class="ion-no-border">
+                <ion-chip :outline="true">PDV</ion-chip>
+                <ion-icon style="margin-left: 0.5rem;" :icon="calendarOutline"/>
+                <ion-label class="date" style="margin-left: 0.5rem;">22:30 - 31/10/2025</ion-label>
             </ion-item>
- 
-            <ion-button color="primary" expand="full">+ Añadir producto</ion-button>
+             <div class="ete"> <!-- edge to edge -->
+              <ion-button  expand="full" class="btn-anadir">+ Añadir producto</ion-button>
+            </div>
         </ion-content>
-
-
         <ion-footer class="ion-no-border">
-            <ion-chip>Cancelado</ion-chip>
-            <ion-chip>No pagado</ion-chip>
-            <ion-label>Total bs. 200.00</ion-label>
-            <ion-button expand="full" class="btn-ctr-up">PAGAR</ion-button>
-            <ion-button expand="full" color="primary" class="btn-ctr">AVANZAR</ion-button>
+          <ion-item>
+            <ion-chip color="danger" :outline="true" slot="start"><ion-icon :icon="banOutline"/><ion-label>Cancelar pedido</ion-label></ion-chip>
+            <ion-chip color="warning" slot="start" style="margin-left: 0.5rem;">No pagado</ion-chip>
+            <ion-label slot="end">Total bs. 200.00</ion-label>  
+          </ion-item>
+                    
+          <ion-button expand="full" class="btn-pay">PAGAR</ion-button>
+          <ion-button expand="full" class="btn-ctr">AVANZAR</ion-button>
         </ion-footer>
-    <!-- </div> -->
-    <!-- editar pedido -->
-    <!-- <div v-else class="order-view-wrapper"> -->
+    </template>
+    <template v-else>
         <ion-header class="ion-no-border">
             <ion-toolbar>
-                <ion-button color="warning" expand="full"></ion-button>
+                <ion-button slot="start" fill="clear" size="small" @click="close()"><ion-icon :icon="chevronBackOutline"/></ion-button>
+                <ion-chip :outline="true">Pedido</ion-chip>
             </ion-toolbar>
         </ion-header>
         
@@ -39,14 +48,15 @@
             <p><strong>Hora:</strong> {{ Order?.hora }}</p> -->
             <p>Información del pedido...</p>
         </ion-content>
-      <!-- </div> -->
-  </ion-modal>
+      </template>
+    </ion-modal>
 </template>
 
 <script setup lang="ts">
-import { IonContent, IonModal, IonHeader } from '@ionic/vue'
-import { bagHandleOutline, chevronBackOutline } from 'ionicons/icons';
+import { bagHandleOutline, chevronBackOutline, pencilSharp, calendarOutline, banOutline} from 'ionicons/icons';
+import { ref, computed } from 'vue';
 import type { Order } from '@/mock/deliveries/order'
+
 
 const props = defineProps<{
   isOpen: boolean
@@ -61,34 +71,67 @@ const emit = defineEmits<{
 function close() {
   emit('update:isOpen', false)
 }
+
+//
+
+const tipoPedido = ref('En el local')
+
+function toggleTipo() {
+  tipoPedido.value =
+    tipoPedido.value === 'En el local'
+      ? 'Para llevar'
+      : 'En el local'
+}
 </script>
 
 <style scoped>
-.chips {
-  display: flex;
-  gap: 0.3rem;
-  flex-wrap: wrap;
+
+
+
+
+.date {
+  font-size: 0.7rem;
+  margin-left: 0.3rem;
 }
 
-.chip {
-  border-radius: 20px;
-  font-size: 0.8rem;
-  padding: 0.2rem 0.6rem;
-  font-weight: 600;
+.ete {
+  margin-left: calc(var(--page-horizontal-padding) * -1);
+  margin-right: calc(var(--page-horizontal-padding) * -1);
 }
 
-.chip-outline {
-  border: 1px solid #000000;
-  color: #000000;
+ion-item ion-chip {
+  margin-left: 0rem !important;
+  margin-right: 0 !important;
 }
 
-.btn-ctr-up {
+.btn-pay {
+  --border-style: none;
+  --color: #ffffff;      
+  --border-width: 0;    
+  --background-hover: rgba(211, 47, 47, 0.1);
+  --background-activated: rgba(211, 47, 47, 0.2);
+  --border-radius: 0;
+  --background: #0074fd;
     margin: 0;
     height: 2rem;
 }
 
 .btn-ctr {
+  --border-style: none;
+  --color: #ffffff;      
+  --border-width: 0;    
+  --background-hover: rgba(211, 47, 47, 0.1);
+  --background-activated: rgba(211, 47, 47, 0.2);
+  --border-radius: 0;
+  --background: #25D92B;
     margin: 0;
     height: 4rem;
 }
+
+.btn-anadir {
+  --border-style: none;
+  --background: #0074fd;
+}
+
+
 </style>
