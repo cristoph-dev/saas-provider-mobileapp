@@ -1,14 +1,13 @@
 <template>
   <ion-modal :is-open="isOpen" @didDismiss="close">
-    <!-- add products -->
-    <div v-if="mode === 'add-product'" class="add-product-wrapper">
+    <!-- <div v-if="mode === 'add-product'" class="add-product-wrapper"> -->
         <ion-header class="ion-no-border" >
             <ion-toolbar color="warning">
                 <ion-button slot="start" fill="clear" size="small" @click="close()"><ion-icon :icon="chevronBackOutline"/></ion-button>
                 <ion-chip :outline="true">Pedido</ion-chip>           
             </ion-toolbar>
         </ion-header>
-        <ion-content>
+        <ion-content fullscreen>
             <ion-item>
                 <ion-chip :outline="true">BDV</ion-chip>
                 <ion-label class="ion-padding">22:30 - 31/10/2025</ion-label>
@@ -25,9 +24,9 @@
             <ion-button expand="full" class="btn-ctr-up">PAGAR</ion-button>
             <ion-button expand="full" color="primary" class="btn-ctr">AVANZAR</ion-button>
         </ion-footer>
-    </div>
+    <!-- </div> -->
     <!-- editar pedido -->
-    <div v-else class="order-view-wrapper">
+    <!-- <div v-else class="order-view-wrapper"> -->
         <ion-header class="ion-no-border">
             <ion-toolbar>
                 <ion-button color="warning" expand="full"></ion-button>
@@ -40,7 +39,7 @@
             <p><strong>Hora:</strong> {{ Order?.hora }}</p> -->
             <p>Información del pedido...</p>
         </ion-content>
-      </div>
+      <!-- </div> -->
   </ion-modal>
 </template>
 
@@ -48,9 +47,6 @@
 import { IonContent, IonModal, IonHeader } from '@ionic/vue'
 import { bagHandleOutline, chevronBackOutline } from 'ionicons/icons';
 import type { Order } from '@/mock/deliveries/order'
-
-
-
 
 const props = defineProps<{
   isOpen: boolean
@@ -74,7 +70,6 @@ function close() {
   flex-wrap: wrap;
 }
 
-/* CHIPS (circulitos con info (pagado, no pagado, en preparacion...)) */
 .chip {
   border-radius: 20px;
   font-size: 0.8rem;
@@ -90,7 +85,6 @@ function close() {
 .btn-ctr-up {
     margin: 0;
     height: 2rem;
-    background-color: #322acfa6;
 }
 
 .btn-ctr {

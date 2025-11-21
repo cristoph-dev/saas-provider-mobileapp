@@ -120,8 +120,6 @@ async function onSubmit() {
 
 <style scoped>
 
-
-
 .logo-section {
   display: flex;
   flex-direction: column;
