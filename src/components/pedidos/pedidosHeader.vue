@@ -19,7 +19,6 @@
                 Mesas
               </button>
             </div>
-          <!-- <ion-button slot="end" shape="round" color="primary"><ion-icon  slot="icon-only" :icon="ellipsisVertical"/></ion-button> -->
           </ion-item>
       </ion-toolbar>
     </ion-header>
@@ -40,9 +39,7 @@
 </ion-chip>
     </ion-item>
 
-
   <!-- APARTADO DE MESAS -->
-
 
     <ion-item v-else lines="none" >
       <div class="salas-grid">
@@ -114,17 +111,11 @@ const modalMode = ref<'new' | 'view'>('new')
 const selectedOrder = ref<Order | null>(null)
 
 function openAddProduct() {
-  // 1. Crear un nuevo delivery vacío
   const nuevo = DeliveryService.create("En el local")
-
-  // 2. Enviar ese delivery al modal
   selectedOrder.value = nuevo as any
-
   modalMode.value = "new"
   isOrderModalOpen.value = true
 }
-
-// mostrar cantidad pedidos
 const props = defineProps<{
   counts: {
     todos: number
@@ -143,7 +134,7 @@ const props = defineProps<{
   display: flex;
   width: 260px;
   margin: 0.8rem auto;
-  background: #a5d86e; /* verde claro */
+  background: #a5d86e; 
   border-radius: 50px;
   overflow: hidden;
 }

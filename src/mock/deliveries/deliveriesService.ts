@@ -2,15 +2,12 @@ import { deliveries, type Delivery } from "./deliveries"
 import type { CategoryProduct } from "@/mock/menu/categories"
 import { SalesService } from "@/mock/sales/salesService"
 
-// Autoincrement coherente
+// Autoincrement 
 let lastId = deliveries.length
   ? Math.max(...deliveries.map(d => d.id)) + 1
   : 1
 
-export const DeliveryService = {
-  // ---------------------------------------
-  // GETTERS
-  // ---------------------------------------
+export const DeliveryService = { //geters
   getAll(): Delivery[] {
     return deliveries
   },
@@ -18,10 +15,6 @@ export const DeliveryService = {
   getById(id: number): Delivery | undefined {
     return deliveries.find(d => d.id === id)
   },
-
-  // ---------------------------------------
-  // CREATE DELIVERY
-  // ---------------------------------------
   create(type: "En el local" | "Para llevar"): Delivery {
     const now = new Date()
 
@@ -44,9 +37,6 @@ export const DeliveryService = {
     return nuevo
   },
 
-  // ---------------------------------------
-  // ADD PRODUCT
-  // ---------------------------------------
   addProduct(delivery: Delivery, product: CategoryProduct, qty = 1) {
     const existing = delivery.products.find(p => p.id === product.id)
 
@@ -67,9 +57,6 @@ export const DeliveryService = {
     this.save()
   },
 
-  // ---------------------------------------
-  // UPDATE TOTALS
-  // ---------------------------------------
   updateTotals(delivery: Delivery) {
     const totalUSD = delivery.products.reduce(
       (sum, p) => sum + p.qty * p.price,
@@ -80,15 +67,9 @@ export const DeliveryService = {
     delivery.totalBs = (totalUSD * 78).toFixed(2)
   },
 
-  // ---------------------------------------
-  // CANCEL DELIVERY
-  // ---------------------------------------
   cancel(delivery: Delivery) {
-    // 1. Eliminar el pedido del listado principal
     const index = deliveries.findIndex((d) => d.id === delivery.id)
     if (index !== -1) deliveries.splice(index, 1)
-
-    // 2. Registrar cancelación en ventas
     SalesService.cancel(
       delivery.id,
       delivery.deliveryType === "En el local" ? "local" : "takeaway"
@@ -96,12 +77,7 @@ export const DeliveryService = {
 
     this.save()
   },
-
-  // ---------------------------------------
-  // PAY / SELL DELIVERY
-  // ---------------------------------------
   sell(delivery: Delivery) {
-    // 1. Registrar la venta
     SalesService.sell(
       delivery.id,
       delivery.totalUSD,
@@ -109,16 +85,11 @@ export const DeliveryService = {
       delivery.deliveryType === "En el local" ? "local" : "takeaway"
     )
 
-    // 2. Eliminar el delivery
     const index = deliveries.findIndex((d) => d.id === delivery.id)
     if (index !== -1) deliveries.splice(index, 1)
 
     this.save()
   },
-
-  // ---------------------------------------
-  // SAVE + LOAD
-  // ---------------------------------------
   save() {
     localStorage.setItem("deliveries", JSON.stringify(deliveries))
   },
@@ -136,5 +107,4 @@ export const DeliveryService = {
   }
 }
 
-// cargar al iniciar
 DeliveryService.load()

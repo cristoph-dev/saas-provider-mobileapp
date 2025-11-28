@@ -1,6 +1,5 @@
 <template>
   <ion-page>
-    <!-- SAFE AREA: mismo header que en LoginPage -->
     <ion-header class="ion-no-border">
       <ion-toolbar>
         <ion-button
@@ -20,14 +19,11 @@
     <ion-content fullscreen>
       <div class="content-center ion-padding ion-text-center">
         <ion-list class="form-list">
-          <!-- Logo, igual que en Login -->
           <div class="logo-section">
             <div class="logo-container">
               <img :src="logoRedesIp" class="logo" />
             </div>
           </div>
-
-          <!-- Nombre completo -->
           <ion-item>
             <ion-input
               v-model="fullName"
@@ -37,8 +33,6 @@
               @keyup.enter="onSubmit"
             />
           </ion-item>
-
-          <!-- Correo -->
           <ion-item :class="{ 'has-error': emailTouched && !isEmailValid }">
             <ion-input
               v-model="email"
@@ -50,8 +44,6 @@
               @keyup.enter="onSubmit"
             />
           </ion-item>
-
-          <!-- Password -->
           <ion-item :class="{ 'has-error': passwordTouched && !isPasswordValid }">
             <ion-input
               v-model="password"
@@ -63,8 +55,6 @@
               @keyup.enter="onSubmit"
             />
           </ion-item>
-
-          <!-- Confirmar password -->
           <ion-item :class="{ 'has-error': confirmTouched && !passwordsMatch }">
             <ion-input
               v-model="passwordConfirm"
@@ -76,8 +66,6 @@
               @keyup.enter="onSubmit"
             />
           </ion-item>
-
-          <!-- Link a iniciar sesión -->
           <div class="container-register">
             <span class="helper-text">
               ¿Ya tienes una cuenta?
@@ -87,8 +75,6 @@
         </ion-list>
       </div>
     </ion-content>
-
-    <!-- Footer fijo, respetando safe area bottom -->
     <ion-footer class="ftr">
       <ion-button
         expand="full"
@@ -131,15 +117,13 @@ const password = ref('');
 const passwordConfirm = ref('');
 const loading = ref(false);
 
-// Para marcar los campos en rojo solo cuando se tocan
+
 const emailTouched = ref(false);
 const passwordTouched = ref(false);
 const confirmTouched = ref(false);
 
 const isEmailValid = computed(() =>
   /\S+@\S+\.\S+/.test(email.value)
-  // si quieres restringir a un dominio:
-  // /^[^@]+@unimar\.edu\.ve$/i.test(email.value)
 );
 
 const isPasswordValid = computed(() =>
@@ -172,7 +156,7 @@ async function onSubmit() {
     );
 
     localStorage.setItem('authUser', JSON.stringify(user));
-    router.push('/menu'); // o '/login'
+    router.push('/menu'); 
   } catch (e: any) {
     alert(e.message || 'Error al crear la cuenta');
   } finally {
@@ -221,23 +205,17 @@ a {
   text-decoration: none;
 }
 
-/* Mismo estilo de botón del login */
 .btn-ctr {
   margin: 0;
   height: 4rem;
 }
 
-/* Bordes rojos cuando hay error */
 .has-error {
   --highlight-color-focused: #f44336;
   --border-color: #f44336;
 }
 
-/* Si quisieras algo de padding extra abajo, se lo puedes dar al footer,
-   pero Ionic ya respeta el safe-area-bottom */
 .ftr {
-  /* opcional:
-  padding-bottom: env(safe-area-inset-bottom);
-  */
+
 }
 </style>

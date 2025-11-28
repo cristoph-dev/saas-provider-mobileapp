@@ -1,241 +1,165 @@
 <template>
-    <ion-page>
-        <ion-content>
-        <ion-searchbar show-cancel-button="focus" placeholder="buscar por categoria o producto"></ion-searchbar>
-        <ion-item>
-            <ion-button id="popover-categorias" size="small" shape="round">
-                <ion-icon slot="icon-only" :icon="menuOutline"></ion-icon>Categorias
-            </ion-button>
-            <ion-popover trigger="popover-categorias" :dismiss-on-select="false">
-                <ion-content>
-                <ion-list>
-                    <ion-item :button="true" :detail="false" @click="handleAddCategory">
-                        <ion-icon  slot="start" :icon="addOutline"/>Añadir categoría
-                    </ion-item>
-                    <ion-item :button="true" :detail="false">
-                        <ion-icon  slot="start" :icon="chevronCollapseOutline"></ion-icon>Cerrar todas las categorias
-                    </ion-item>
-                    <ion-item :button="true" :detail="false">
-                        <ion-icon  slot="start" :icon="chevronExpandOutline"></ion-icon>Abrir todas las categorias
-                    </ion-item>
-                    <!-- resumen de todas las categorias -->
-                    <ion-item :button="true" :detail="false">
-                        Categorias {{ categories.length }} | Productos {{ totalProducts }}
-                    </ion-item>
-                    <ion-item v-for="cat in categories" :key="cat.id" :button="true" :detail="false"> <!-- listado de las categorias que se vayan añadiendo -->
-                        {{ cat.name }}
-                    </ion-item>
+  <ion-page>
+    <ion-content>
+      <ion-searchbar
+        show-cancel-button="focus"
+        placeholder="buscar por categoria o producto"
+      ></ion-searchbar>
+      <ion-item>
+        <ion-button id="popover-categorias" size="small" shape="round">
+          <ion-icon slot="icon-only" :icon="menuOutline" /> Categorias
+        </ion-button>
 
-                    <!-- <ion-item :button="true" id="nested-trigger">More options...</ion-item> -->
+        <ion-popover trigger="popover-categorias" :dismiss-on-select="false">
+          <ion-content>
+            <ion-list>
+              <ion-item button @click="handleAddCategory">
+                <ion-icon slot="start" :icon="addOutline" /> Añadir categoría
+              </ion-item>
 
-                    <ion-popover trigger="nested-trigger" :dismiss-on-select="true" side="end">
-                    <ion-content>
-                        <ion-list>
-                        <ion-item :button="true" :detail="false">Nested option</ion-item>
-                        </ion-list>
-                    </ion-content>
-                    </ion-popover>
-                </ion-list>
-                </ion-content>
-            </ion-popover>
-        </ion-item>
+              <ion-item button>
+                <ion-icon slot="start" :icon="chevronCollapseOutline" />
+                Cerrar todas
+              </ion-item>
 
-        <!-- :value="['first', 'third']" = opened-->
-            <ion-accordion-group :multiple="true" :value="[]"> 
-                <ion-accordion
-                    v-for="category in categories"
-                    :key="category.id"
-                    :value="String(category.id)"
+              <ion-item button>
+                <ion-icon slot="start" :icon="chevronExpandOutline" />
+                Abrir todas
+              </ion-item>
+
+              <ion-item>
+                Categorías {{ categories.length }} |
+                Productos {{ totalProducts }}
+              </ion-item>
+
+              <ion-item
+                v-for="cat in categories"
+                :key="cat.id"
+                button
+              >
+                {{ cat.name }}
+              </ion-item>
+            </ion-list>
+          </ion-content>
+        </ion-popover>
+      </ion-item>
+      <ion-accordion-group :multiple="true">
+        <!-- Cada categoría -->
+        <template v-for="category in categories" :key="category.id">
+          <ion-accordion :value="String(category.id)">
+            <!-- HEADER -->
+            <ion-item slot="header" class="category-header" color="light">
+              <div
+                class="input-wrap"
+                @click.stop
+                @pointerdown.stop
+                @touchstart.stop
+              >
+                <ion-input
+                  v-model="category.name"
+                  label="Nombre de categoría"
+                  label-placement="floating"
+                  :maxlength="20"
+                  :counter="true"
+                />
+              </div>
+
+              <ion-badge>{{ category.products.length }}</ion-badge>
+            </ion-item>
+            <!-- BOTÓN AÑADIR PRODUCTO -->
+            <div slot="content" class="product">
+              <ion-button
+                size="small"
+                expand="block"
+                @click.stop="addProduct(category.id)"
+              >
+                <ion-icon slot="start" :icon="addOutline" />
+                Añadir producto
+              </ion-button>
+            </div>
+            <!-- LISTA DE PRODUCTOS -->
+            <ion-list slot="content" class="product-list">
+              <template v-for="product in category.products" :key="product.id">
+
+                <ion-item
+                  class="product-row"
+                  button
+                  lines="full"
+                  :detail="false"
+                  @click="openEditModal(category.id, product)"
                 >
-                <ion-item slot="header" color="light" class="category-header">
-                    <div class="input-wrap" @click.stop @pointerdown.stop @touchstart.stop> <!--  propiedad para que no se propague el click (ponerlo si se sobresolapa la funcion entre los botones)-->
-                        <ion-input
-                            v-model="category.name"
-                            label="Nombre de categoría"
-                            label-placement="floating"
-                            :counter="true"
-                            :maxlength="20"
-                            placeholder=""
-                            style="margin-right: 0.5rem;"
-                        ></ion-input>
-                    </div>
+                  <ion-thumbnail slot="start" class="thumb">
+                    <ion-img :src="getProductImage(product.imageKey)" />
+                  </ion-thumbnail>
 
-                    <ion-badge>{{ category.products.length }}</ion-badge> 
+                  <ion-label>
+                    <h3>{{ product.name }}</h3>
+                  </ion-label>
 
-                    <ion-button
-                        :id="`popover-opciones-categoria-${category.id}`"
-                        size="small"
-                        shape="round"
-                        @click.stop
-                        @pointerdown.stop
-                        @touchstart.stop
-                    >
-                        <ion-icon  slot="icon-only" :icon="ellipsisVertical" ></ion-icon>
-                    </ion-button> 
-                    <ion-popover
-                        :trigger="`popover-opciones-categoria-${category.id}`"
-                        :dismiss-on-select="true"
-                    >
-                        <ion-content>
-                        <ion-list>
-                            <ion-item lines="full" :button="true" :detail="false">
-                                <ion-icon  slot="start" :icon="chevronUpOutline"></ion-icon>Mover arriba
-                            </ion-item>
-                            <ion-item lines="full" :button="true" :detail="false">
-                                <ion-icon  slot="start" :icon="chevronDownOutline"></ion-icon>Mover abajo
-                            </ion-item>
-                            <ion-item lines="full" :button="true" :detail="false">
-                                <ion-icon  slot="start" :icon="copyOutline"></ion-icon>Duplicar
-                            </ion-item>
-                            <ion-item lines="full" :button="true" :detail="false">
-                                <ion-icon  slot="start" :icon="trashOutline"></ion-icon>Eliminar
-                            </ion-item>
-                            <!-- <ion-item :button="true" id="nested-trigger">More options...</ion-item> -->
-
-                            <ion-popover trigger="nested-trigger" :dismiss-on-select="true" side="end">
-                            <ion-content>
-                                <ion-list>
-                                <ion-item :button="true" :detail="false">Nested option</ion-item>
-                                </ion-list>
-                            </ion-content>
-                            </ion-popover>
-                        </ion-list>
-                        </ion-content>
-                    </ion-popover>
+                  <ion-label slot="end" class="price">
+                    {{ product.currency }}. {{ product.price.toFixed(2) }}
+                  </ion-label>
                 </ion-item>
 
-                <div slot="content" class="product">
-                    <ion-button
-                        size="small"
-                        style="--padding: 30px; margin: 0 auto; display: block; --box-shadow: none;"
-                        @click.stop="addProduct(category.id)"
-                    >
-                        <ion-icon  slot="icon-only" :icon="addOutline"></ion-icon>Añadir producto
-                    </ion-button>
-                </div>
+              </template>
+            </ion-list>
 
-                    <ion-list slot="content" class="product-list">
-                        <template
-                            v-for="product in category.products"
-                            :key="product.id"
-                        >
-                        <ion-item
-                            :id="`open-product-${category.id}-${product.id}`"
-                            class="product-row"
-                            lines="full"
-                            button
-                            :detail="false"
-                        >
-                            <ion-thumbnail slot="start" class="thumb">
-                                <ion-img :src="getProductImage(product.imageKey)"></ion-img>
-                            </ion-thumbnail>
+          </ion-accordion>
 
-                            <ion-label>
-                                <h3>{{ product.name }}</h3>
-                            </ion-label>
+        </template>
+      </ion-accordion-group>
+<ion-modal :is-open="isEditModalOpen" @didDismiss="isEditModalOpen = false">
+  <template v-if="selectedProduct">
 
-                            <ion-label slot="end" class="price">
-                                {{ product.currency }}. {{ product.price.toFixed(2) }}
-                            </ion-label>
+    <ion-header class="ion-no-border">
+      <ion-toolbar>
+        <ion-title>Editar producto</ion-title>
+        <ion-buttons slot="end">
+          <ion-button fill="clear" @click="isEditModalOpen = false">
+            <ion-icon :icon="closeOutline" />
+          </ion-button>
+        </ion-buttons>
 
-                            <ion-button
-                                :id="`popover-producto-${category.id}-${product.id}`"
-                                slot="end"
-                                fill="clear"
-                                size="small"
-                                @click.stop
-                            >
-                                <ion-icon slot="icon-only" :icon="ellipsisVertical"/>
-                            </ion-button>
-                            <ion-popover
-                                :trigger="`popover-producto-${category.id}-${product.id}`"
-                                :dismiss-on-select="true"
-                            >
-                                <ion-content>
-                                <ion-list>
-                                    <ion-item lines="full" :button="true" :detail="false">
-                                        <ion-icon  slot="start" :icon="chevronUpOutline"></ion-icon>Mover arriba
-                                    </ion-item>
-                                    <ion-item lines="full" :button="true" :detail="false">
-                                        <ion-icon  slot="start" :icon="chevronDownOutline"></ion-icon>Mover abajo
-                                    </ion-item>
-                                    <ion-item lines="full" :button="true" :detail="false">
-                                        <ion-icon  slot="start" :icon="copyOutline"></ion-icon>Duplicar
-                                    </ion-item>
-                                    <ion-item lines="full" :button="true" :detail="false">
-                                        <ion-icon  slot="start" :icon="trashOutline"></ion-icon>Eliminar
-                                    </ion-item>
-                                    <ion-popover trigger="nested-trigger" :dismiss-on-select="true" side="end">
-                                    <ion-content>
-                                        <ion-list>
-                                        <ion-item :button="true" :detail="false">Nested option</ion-item>
-                                        </ion-list>
-                                    </ion-content>
-                                    </ion-popover>
-                                </ion-list>
-                                </ion-content>
-                            </ion-popover>
-                        </ion-item>
+      </ion-toolbar>
+    </ion-header>
 
-                        <ion-modal :trigger="`open-product-${category.id}-${product.id}`">
-                        <ion-header>
-                            <ion-toolbar>
-                            <ion-title>Editar producto</ion-title>
-                            <ion-buttons slot="end">
-                                <ion-button onclick="this.closest('ion-modal').dismiss()">
-                                    <ion-icon  slot="start" :icon="closeOutline"></ion-icon>
-                                </ion-button>
-                            </ion-buttons>
-                            </ion-toolbar>
-                        </ion-header>
-                        <ion-content class="ion-padding">
-                            <ion-item>
-                            <ion-input
-                                label="Nombre"
-                                label-placement="floating"
-                                :value="product.name"
-                            />
-                            </ion-item>
-                            <ion-item>
-                            <ion-input
-                                label="Descripcion"
-                                label-placement="floating"
-                                value="Buenarda"
-                            />
-                            </ion-item>
-                            <ion-item>
-                            <ion-input
-                                label="Precio"
-                                label-placement="floating"
-                                :value="`${product.currency} ${product.price.toFixed(2)}`"
-                            />
-                            </ion-item>
-                        </ion-content>
-                        </ion-modal>
-                        </template>
-                    </ion-list>
+    <ion-content class="ion-padding">
+      <ion-item>
+        <ion-input
+          v-model="selectedProduct.name"
+          label="Nombre"
+          label-placement="floating"
+        />
+      </ion-item>
 
-                    <!-- <ion-list slot="content" class="product-list">
-                        <ion-item class="product-row" lines="full" button :detail="false">
-                        <ion-thumbnail slot="start" class="thumb">
-                            <ion-img :src="arepa2"></ion-img>
-                        </ion-thumbnail>
+      <ion-item>
+        <ion-input
+          v-model.number="selectedProduct.price"
+          type="number"
+          label="Precio"
+        />
+      </ion-item>
 
-                        <ion-label>
-                            <h3>Arepa reina pepiada</h3>
-                        </ion-label>
-                        <ion-label slot="end" class="price">Bs. 22,00</ion-label>
-                        <ion-button slot="end" fill="clear" size="small" @click.stop>
-                            <ion-icon slot="icon-only" :icon="ellipsisVertical" />
-                        </ion-button>
-                        </ion-item>
-                    </ion-list> -->
-                    
-                </ion-accordion>
-            </ion-accordion-group>
-        </ion-content>
-    </ion-page>
+      <ion-item>
+        <ion-input
+          v-model="selectedProduct.currency"
+          label="Moneda"
+        />
+      </ion-item>
+
+      <ion-button expand="block" class="ion-margin-top" @click="saveProduct">
+        Guardar
+      </ion-button>
+
+    </ion-content>
+
+  </template>
+</ion-modal>
+
+    </ion-content>
+  </ion-page>
 </template>
+
 
 <script setup lang="ts">
 import {
@@ -255,24 +179,17 @@ import {
 import { ref, computed } from 'vue';
 import type { Category, CategoryProduct } from '@/mock/menu/categories';
 import { CategoriesService } from '@/mock/menu/categoriesService';
-
-// ⭐ MAPA CENTRALIZADO DE IMÁGENES
 import { getProductImage } from '@/mock/menu/productImages';
-
 const categories = ref<Category[]>(CategoriesService.getAll());
-
-// TOTAL DE PRODUCTOS
 const totalProducts = computed(() =>
   categories.value.reduce((sum, cat) => sum + cat.products.length, 0)
 );
 
-// AÑADIR CATEGORÍA
 function handleAddCategory() {
   CategoriesService.addCategory();
   categories.value = [...CategoriesService.getAll()];
 }
 
-// AÑADIR PRODUCTO NUEVO
 function addProduct(categoryId: number) {
   CategoriesService.addProduct(categoryId, {
     name: 'Nuevo producto',
@@ -283,11 +200,33 @@ function addProduct(categoryId: number) {
 
   categories.value = [...CategoriesService.getAll()];
 }
-
-// OBTENER IMAGEN DEL PRODUCTO (limpio)
 function getProductImageSrc(product: CategoryProduct) {
   return getProductImage(product.imageKey);
 }
+
+const selectedProduct = ref<CategoryProduct | null>(null);
+const selectedCategoryId = ref<number | null>(null);
+const isEditModalOpen = ref(false);
+
+function openEditModal(categoryId: number, product: CategoryProduct) {
+  selectedCategoryId.value = categoryId;
+  selectedProduct.value = { ...product }; 
+  isEditModalOpen.value = true;
+}
+
+function saveProduct() {
+  if (!selectedProduct.value || selectedCategoryId.value === null) return;
+
+  CategoriesService.updateProduct(
+    selectedCategoryId.value,
+    selectedProduct.value
+  );
+
+  categories.value = [...CategoriesService.getAll()];
+
+  isEditModalOpen.value = false;
+}
+
 </script>
 
 
@@ -315,7 +254,6 @@ ion-badge {
   margin-left: 8px;
 }
 
-/* popover categorias */
 #popover-categorias {
   --padding-start: var(--page-horizontal-padding);
   --padding-end: var(--page-horizontal-padding);

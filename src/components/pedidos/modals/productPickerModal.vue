@@ -92,7 +92,6 @@
         <ion-label class="footer-qty">
           {{ totalQty }} artículos
         </ion-label>
-
         <!-- Precios -->
         <ion-label class="footer-prices" slot="end">
           <div class="usd">{{ totalUSDFormatted }}$</div>
@@ -165,7 +164,7 @@ watch(
 );
 
 // -------------------------------
-// Cerrar modal (NO BORRA EL CARRITO)
+// Cerrar modal 
 // -------------------------------
 function close() {
   emit("update:isOpen", false);
@@ -244,16 +243,10 @@ const totalBSFormatted = computed(() => (totalUSDNumber.value * 78).toFixed(2));
 // -------------------------------
 function confirmSelection() {
   if (!props.order) return;
-
   console.log("🟦 SINCRONIZANDO PEDIDO CON tempCart");
-
-  // 1. Vaciar productos del pedido
   props.order.products.splice(0, props.order.products.length);
-
-  // 2. Insertar lo que quedó en tempCart
   for (const key in tempCart.value) {
     const entry = tempCart.value[key];
-
     props.order.products.push({
       id: entry.product.id,
       name: entry.product.name,
@@ -263,7 +256,6 @@ function confirmSelection() {
       imageKey: entry.product.imageKey,
     });
   }
-
   console.log("🟩 Productos finales en el pedido:", props.order.products);
 
   // debugging para la card de pedidosPage
@@ -277,13 +269,11 @@ function confirmSelection() {
 
 
 <style scoped>
-/* FILA */
 .product-row {
   --inner-padding-end: 0;
   --padding-start: 0;
 }
 
-/* MINI THUMBNAIL */
 .thumb {
   width: 60px;
   height: 60px;
@@ -303,13 +293,11 @@ function confirmSelection() {
   border-radius: 4px;
 }
 
-/* NOMBRE */
 .name-label h3 {
   font-size: 0.95rem;
   font-weight: 600;
 }
 
-/* PRECIO */
 .price-label {
   text-align: right;
   font-size: 0.9rem;
@@ -317,7 +305,6 @@ function confirmSelection() {
   margin-left: 6px;
 }
 
-/* BOTONES + / - */
 .action-buttons {
   display: flex;
   align-items: center;
@@ -330,7 +317,6 @@ function confirmSelection() {
   --padding-end: 4px;
 }
 
-/* FOOTER RESUMEN */
 .picker-footer {
   margin-top: 10px;
   padding: 14px 18px;
@@ -342,7 +328,6 @@ function confirmSelection() {
   font-size: 0.9rem;
 }
 
-/* BOTÓN AGREGAR */
 .footer-button {
   --background: #0074fd;
   height: 52px;

@@ -15,15 +15,12 @@
             borderLeftColor: venta.status === 'sold' ? '#00c741' : '#f25555',
           }"
         >
-          <!-- TOP -->
           <div class="top">
             <div class="tag">
               #{{ venta.orderId }} · 
               {{ venta.type === 'local' ? 'En el local' : 'Para llevar' }}
             </div>
           </div>
-
-          <!-- MIDDLE -->
           <div class="middle">
             <div class="chips">
               <div
@@ -40,15 +37,11 @@
                 Cancelado
               </div>
             </div>
-
-            <!-- MONTO -->
             <div class="amounts">
               <div class="usd">{{ venta.totalUSD.toFixed(2) }}$</div>
               <div class="bs">Bs. {{ Number(venta.totalBs).toFixed(2) }}</div>
             </div>
           </div>
-
-          <!-- BOTTOM: FECHA -->
           <div class="bottom">
             {{ venta.createdAt }}
           </div>
@@ -86,7 +79,6 @@ function abrirVenta(venta: Sale) {
   margin-bottom: 0.75rem;
 }
 
-/* CARD */
 .pedido-card {
   width: 100%;
   background: #ffffff;
@@ -96,7 +88,6 @@ function abrirVenta(venta: Sale) {
   border-left: 6px solid #00c741;
 }
 
-/* TOP */
 .top {
   display: flex;
   justify-content: space-between;
@@ -113,7 +104,6 @@ function abrirVenta(venta: Sale) {
   border-radius: 8px;
 }
 
-/* MIDDLE */
 .middle {
   display: flex;
   justify-content: space-between;
@@ -144,7 +134,6 @@ function abrirVenta(venta: Sale) {
   color: #ffffff;
 }
 
-/* Monto */
 .amounts {
   text-align: right;
 }
@@ -155,7 +144,6 @@ function abrirVenta(venta: Sale) {
   color: #000000;
 }
 
-/* FECHA */
 .bottom {
   text-align: center;
   color: #666666;

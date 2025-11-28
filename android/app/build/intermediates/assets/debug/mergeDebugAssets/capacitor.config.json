@@ -1,11 +1,14 @@
 {
-	"appId": "io.ionic.starter",
-	"appName": "POS redes",
+	"appId": "com.redesip.pos",
+	"appName": "POS RedesIP",
 	"webDir": "dist",
 	"plugins": {
 		"Keyboard": {
 			"resize": "native",
 			"resizeOnFullScreen": true
 		}
+	},
+	"server": {
+		"url": "http://10.10.10.188:8100"
 	}
 }

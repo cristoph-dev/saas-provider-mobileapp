@@ -134,7 +134,6 @@ watch(
   margin-bottom: 0.75rem;
 }
 
-/* CARD */
 .pedido-card {
   width: 100%;
   background: #ffffff;
@@ -144,7 +143,6 @@ watch(
   border-left: 6px solid #f4a91e;
 }
 
-/* FILA SUPERIOR */
 .top {
   display: flex;
   justify-content: space-between;
@@ -174,7 +172,6 @@ watch(
   font-size: 1rem;
 }
 
-/* FILA MEDIA */
 .middle {
   display: flex;
   justify-content: space-between;
@@ -187,8 +184,6 @@ watch(
   gap: 0.3rem;
   flex-wrap: wrap;
 }
-
-/* CHIPS (circulitos con info (pagado, no pagado, en preparacion...)) */
 .chip {
   border-radius: 20px;
   font-size: 0.8rem;
@@ -222,7 +217,6 @@ watch(
   color: #ffffff;
 }
 
-/* MONTOS */
 .amounts {
   text-align: right;
 }
@@ -239,7 +233,6 @@ watch(
   color: #333333;
 }
 
-/* FILA INFERIOR */
 .bottom {
   text-align: center;
   color: #666666;

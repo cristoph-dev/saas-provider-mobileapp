@@ -1,7 +1,5 @@
 <template>
-  <ion-modal :is-open="isOpen" @didDismiss="close">
-    
-    <!-- ENCABEZADO -->
+  <ion-modal :is-open="isOpen" @didDismiss="close">   
     <ion-header class="ion-no-border">
       <ion-toolbar
           :style="{
@@ -23,11 +21,7 @@
         <ion-label>| {{ order?.state }}</ion-label>
       </ion-toolbar>
     </ion-header>
-
-    <!-- CONTENIDO -->
     <ion-content fullscreen>
-
-      <!-- Datos del pedido -->
       <ion-toolbar>
         <ion-chip :outline="true">{{ order?.channel }}</ion-chip>
         <ion-icon style="margin-left: 0.5rem;" :icon="calendarOutline" />
@@ -44,9 +38,6 @@
           + Añadir/editar productos
         </ion-button>
       </div>
-
-
-      <!-- LISTADO DE PRODUCTOS -->
       <div v-if="order?.products?.length" class="product-list">
         <ion-list lines="full">
           <ion-item
@@ -71,13 +62,9 @@
           </ion-item>
         </ion-list>
       </div>
-
-      <!-- Si no hay productos -->
       <div v-else class="empty">
         <p>No hay productos añadidos</p>
       </div>
-
-      <!-- PICKER -->
       <ProductPickerModal
         v-model:isOpen="isPickerOpen"
         :order="order"
@@ -155,7 +142,6 @@ function close() {
   emit('close')
 }
 
-//
 
 const tipoPedido = computed({
   get() {
@@ -175,7 +161,6 @@ function toggleTipo() {
       : 'En el local'
 }
 
-// prodcut picker modal 
 const isPickerOpen = ref(false);
 
 function openPicker() {
@@ -221,24 +206,18 @@ function cancelarPedido() {
 
 function pagarPedido() {
   if (!props.order) return;
-  props.order.payment = "Pagado";     // Cambia chip amarillo → azul
+  props.order.payment = "Pagado";     
 }
 
 function avanzarPedido() {
   if (!props.order) return;
-  props.order.state = "En preparación";   // Cambia chip amarillo → verde
+  props.order.state = "En preparación";   
 }
 
 function registrarVenta() {
   if (!props.order) return;
-
-  // Guardar venta
   DeliveryService.sell(props.order);
-
-  // Cerrar modal
   emit("update:isOpen", false);
-
-  // Ir a ventas
   router.push("/tabs/ventas");
 }
 

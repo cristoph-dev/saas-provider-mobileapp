@@ -1,22 +1,51 @@
 <template>
     <ion-header class="ion-no-border">
-        <ion-card>
-            <ion-card-header>
-            <ion-card-title>Card Title</ion-card-title>
-            <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-            </ion-card-header>
+        <ion-toolbar>
+          <ion-card class="profile-card">
+            <div class="info-wrapper">
+              <ion-card-title>{{ user?.name }}</ion-card-title>
+              <ion-card-subtitle>{{ user?.email }}</ion-card-subtitle>
+            </div>
+            <ion-icon :icon="personCircleSharp" class="profile-icon"></ion-icon>
 
-            <ion-card-content>
-            Here's a small text description for the card content. Nothing more, nothing less.
-            </ion-card-content>
-        </ion-card>
+          </ion-card>
+      </ion-toolbar>
     </ion-header>
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonToolbar, IonTitle, IonHeader, IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonLabel, IonContent, IonCard, IonCardHeader, IonCardSubtitle, IonCardContent } from '@ionic/vue';
+import { ref, onMounted } from "vue";
+import { IonPage, IonHeader, IonContent, IonCard, IonIcon, IonCardTitle, IonCardSubtitle } from "@ionic/vue";
+import { personCircleSharp } from "ionicons/icons";
+import type { User } from "@/mock/auth/users";
+
+// Reactive state
+const user = ref<User | null>(null);
+
+onMounted(() => {
+  const data = localStorage.getItem("authUser");
+  if (data) {
+    user.value = JSON.parse(data) as User;
+  }
+});
 </script>
 
 <style scoped>
+.profile-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px;
+  margin: 16px;
+  margin-top: 40px;
+}
 
+.info-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-icon {
+  font-size: 60px;
+}
 </style>

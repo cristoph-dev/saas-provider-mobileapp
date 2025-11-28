@@ -1,7 +1,7 @@
 <template>
     <ion-header class="ion-no-border">
         <ion-toolbar>
-            <h2 slot="start">Menu ({{ items_amount }})</h2>
+            <h2 slot="start">Menú</h2>
             <div class="contenainer-profile" slot="end">
                  <ion-icon :icon="personCircleSharp" class="profile-icon"></ion-icon> <!--TODO icono temporal, aqui deberia poder subirse una imagen con un script -->
             </div>

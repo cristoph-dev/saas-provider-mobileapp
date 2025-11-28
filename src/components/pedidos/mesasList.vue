@@ -1,6 +1,5 @@
 <template>
   <ion-content class="ion-padding">
-    <!-- Grid de mesas -->
     <ion-grid>
       <ion-row>
         <ion-col

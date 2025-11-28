@@ -5,7 +5,6 @@ import pizza1 from "@/assets/products/pizza-margarita.png";
 import pizza2 from "@/assets/products/pizza-pepperoni.png";
 import bebida1 from "@/assets/products/bebida1.png";
 
-// Mapa centralizado
 export const productImages = {
   arepa1,
   arepa2,
@@ -15,7 +14,6 @@ export const productImages = {
   noImage,
 };
 
-// Función segura
 export function getProductImage(key: keyof typeof productImages) {
   return productImages[key] ?? productImages.noImage;
 }

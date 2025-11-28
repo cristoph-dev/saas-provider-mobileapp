@@ -31,12 +31,11 @@ export const SalesService = {
     return newSale;
   },
 
-  // REGISTRAR CANCELACIÓN (cancelled)
   cancel(orderId: number, type: SaleType): Sale {
     const newCancel: Sale = {
       id: sales.length + 1,
       orderId,
-      totalUSD: 0,   // cancelado siempre 0
+      totalUSD: 0,   
       totalBs: 0,
       status: "cancelled",
       type,

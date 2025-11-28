@@ -34,4 +34,5 @@ io.ionic.starter.app-debug-32 C:\laragon\www\saas-provider-app\node_modules\@cap
 io.ionic.starter.app-debug-33 C:\laragon\www\saas-provider-app\node_modules\@capacitor\haptics\android\build\intermediates\packaged_res\debug\packageDebugResources
 io.ionic.starter.app-debug-34 C:\laragon\www\saas-provider-app\node_modules\@capacitor\keyboard\android\build\intermediates\packaged_res\debug\packageDebugResources
 io.ionic.starter.app-debug-35 C:\laragon\www\saas-provider-app\node_modules\@capacitor\preferences\android\build\intermediates\packaged_res\debug\packageDebugResources
-io.ionic.starter.app-debug-36 C:\laragon\www\saas-provider-app\node_modules\@capacitor\status-bar\android\build\intermediates\packaged_res\debug\packageDebugResources
+io.ionic.starter.app-debug-36 C:\laragon\www\saas-provider-app\node_modules\@capacitor\splash-screen\android\build\intermediates\packaged_res\debug\packageDebugResources
+io.ionic.starter.app-debug-37 C:\laragon\www\saas-provider-app\node_modules\@capacitor\status-bar\android\build\intermediates\packaged_res\debug\packageDebugResources

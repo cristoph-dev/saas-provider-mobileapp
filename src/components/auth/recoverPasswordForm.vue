@@ -27,8 +27,6 @@
         </ion-item>
       </div>
     </ion-content>
-
-    <!-- BOTÓN ENVIAR ABAJO (como en el ejemplo) -->
     <ion-footer>
       <ion-button
         expand="full"
@@ -53,7 +51,6 @@
 
         <ion-content fullscreen>
           <div class="modal-content ion-padding ion-text-center">
-            <!-- Aquí luego puedes poner una ilustración -->
             <div class="mail-illustration">
               <!-- <img src="@/assets/mail-ok.svg" alt="Mail enviado" /> -->
             </div>
@@ -112,10 +109,6 @@ async function onSubmit() {
 
   loading.value = true;
   try {
-    // Aquí podrías validar contra UsersService si quieres:
-    // const user = UsersService.getAll().find(u => u.email === email.value.trim());
-    // if (!user) throw new Error('No existe un usuario con ese correo');
-
     showModal.value = true;
   } catch (e: any) {
     alert(e.message || 'Error al procesar la solicitud');
@@ -167,7 +160,6 @@ function editEmail() {
   font-weight: 600;
 }
 
-/* Borde rojo si el correo es inválido */
 .has-error {
   --highlight-color-focused: #f44336;
   --border-color: #f44336;

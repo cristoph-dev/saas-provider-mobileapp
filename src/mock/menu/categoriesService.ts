@@ -1,4 +1,3 @@
-// src/mock/categoriesService.ts
 import type { Category, CategoryProduct } from "./categories";
 import { categories } from "./categories";
 
@@ -45,4 +44,15 @@ export const CategoriesService = {
     category.products.push(newProduct);
     return newProduct;
   },
+
+  updateProduct(categoryId: number, updated: CategoryProduct) {
+  const category = categories.find(c => c.id === categoryId);
+  if (!category) return;
+
+  const idx = category.products.findIndex(p => p.id === updated.id);
+  if (idx === -1) return;
+
+  category.products[idx] = { ...updated };
+}
+
 };
