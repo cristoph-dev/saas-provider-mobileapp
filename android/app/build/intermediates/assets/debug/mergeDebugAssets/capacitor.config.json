@@ -7,8 +7,5 @@
 			"resize": "native",
 			"resizeOnFullScreen": true
 		}
-	},
-	"server": {
-		"url": "http://10.10.10.195:8100"
 	}
 }

@@ -71,46 +71,56 @@
       </ion-item>
     </ion-list>
   </div>
-
-  <OrderModal
-    v-model:isOpen="isOrderModalOpen"
-    :order="selectedOrder"
-    :mode="modalMode"
-  />
 </template>
 
 <script setup lang="ts">
 import { IonContent, IonItem, IonList, IonIcon } from '@ionic/vue'
-import OrderModal from '@/components/pedidos/modals/orderModal.vue'
 import type { Delivery } from "@/mock/deliveries/deliveries"
 import { DeliveryService } from '@/mock/deliveries/deliveriesService'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 
 const emit = defineEmits<{
   (e: "open-order", order: Delivery): void
+  (e: "update-counts", payload: {
+    todos: number
+    pendientes: number
+    enCurso: number
+  }): void
 }>()
 
 function abrirPedido(pedido: Delivery) {
   emit("open-order", pedido)
 }
 
-// 🚀 Lista reactiva REAL
 const pedidos = ref<Delivery[]>([])
 
 onMounted(() => {
-  pedidos.value = DeliveryService.getAll()   // ← ESTA LÍNEA FALTABA
+  pedidos.value = DeliveryService.getAll()
   console.log("PEDIDOS EN DELIVERYLIST:", pedidos.value)
 })
 
-const isOrderModalOpen = ref(false)
-const selectedOrder = ref<Delivery | null>(null)
-const modalMode = ref<'view' | 'new'>('view')
+//emits al pedidosHeader 
+const totalTodos = computed(() => pedidos.value.length)
 
-function openLocalModal(pedido: Delivery) {
-  selectedOrder.value = pedido
-  modalMode.value = 'view'
-  isOrderModalOpen.value = true
-}
+const totalPendientes = computed(() =>
+  pedidos.value.filter(p => p.state === "Pendiente").length
+)
+
+const totalEnCurso = computed(() =>
+  pedidos.value.filter(p => p.state === "En preparación").length
+)
+
+watch(
+  pedidos,
+  () => {
+    emit("update-counts", {
+      todos: pedidos.value.length,
+      pendientes: pedidos.value.filter(p => p.state === "Pendiente").length,
+      enCurso: pedidos.value.filter(p => p.state === "En preparación").length
+    })
+  },
+  { deep: true, immediate: true }
+)
 </script>
 
 

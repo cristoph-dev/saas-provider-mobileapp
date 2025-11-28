@@ -1,4 +1,4 @@
-#Fri Nov 21 11:09:39 VET 2025
+#Fri Nov 21 17:07:03 VET 2025
 base.0=C\:\\laragon\\www\\saas-provider-app\\android\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 base.1=C\:\\laragon\\www\\saas-provider-app\\android\\app\\build\\intermediates\\dex\\debug\\mergeLibDexDebug\\0\\classes.dex
 base.2=C\:\\laragon\\www\\saas-provider-app\\android\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex

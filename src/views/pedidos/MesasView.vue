@@ -1,8 +1,6 @@
 <template>
   <ion-page>
-      <IonContent>
-        <MesasList/>
-      </IonContent>
+    <MesasList/>
   </ion-page>
 </template>
 

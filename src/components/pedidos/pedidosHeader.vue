@@ -2,9 +2,24 @@
   <ion-header class="ion-no-border">
       <ion-toolbar>
           <ion-item  lines="none" class="toolbar-buttons">
-            <ion-button @click="set('pedidos')" id="button-left-part" color="primary">Pedidos</ion-button>
-            <ion-button @click="set('mesas')" id="button-right-part" color="primary">Mesas</ion-button>
-          <ion-button slot="end" size="small" shape="round" color="primary"><ion-icon  slot="icon-only" :icon="ellipsisVertical"/></ion-button>
+            <div class="tab-switcher">
+              <button
+                :class="['tab-btn', activeTab === 'pedidos' ? 'active-left' : 'inactive-left']"
+                @click="set('pedidos')"
+              >
+                <ion-icon :icon="storefrontOutline" class="icon" />
+                Pedidos
+              </button>
+
+              <button
+                :class="['tab-btn', activeTab === 'mesas' ? 'active-right' : 'inactive-right']"
+                @click="set('mesas')"
+              >
+                <ion-icon :icon="peopleCircleOutline" class="icon" />
+                Mesas
+              </button>
+            </div>
+          <!-- <ion-button slot="end" shape="round" color="primary"><ion-icon  slot="icon-only" :icon="ellipsisVertical"/></ion-button> -->
           </ion-item>
       </ion-toolbar>
     </ion-header>
@@ -12,10 +27,22 @@
 
     <ion-button v-if="activeTab === 'pedidos'" expand="full" @click="emit('new-order')"><ion-icon slot="start" :icon="addOutline"/>Nuevo pedido</ion-button>
     <ion-item v-if="activeTab === 'pedidos'" lines="none" >
-      <ion-chip outline>Todo<ion-badge>0</ion-badge></ion-chip>
-      <ion-chip outline>Pendiente<ion-badge color="warning">0</ion-badge></ion-chip> 
-      <ion-chip outline>En curso<ion-badge color="success">0</ion-badge></ion-chip> 
+<ion-chip outline>
+  Todo <ion-badge>{{ props.counts.todos }}</ion-badge>
+</ion-chip>
+
+<ion-chip outline>
+  Pendiente <ion-badge color="warning">{{ props.counts.pendientes }}</ion-badge>
+</ion-chip>
+
+<ion-chip outline>
+  En curso <ion-badge color="success">{{ props.counts.enCurso }}</ion-badge>
+</ion-chip>
     </ion-item>
+
+
+  <!-- APARTADO DE MESAS -->
+
 
     <ion-item v-else lines="none" >
       <div class="salas-grid">
@@ -35,7 +62,7 @@
 import {
   searchSharp, menuOutline, ellipsisVertical, addOutline, chevronCollapseOutline,
   chevronExpandOutline, chevronDownOutline, chevronUpOutline, copyOutline,
-  trashOutline, closeOutline, restaurantOutline
+  trashOutline, closeOutline, restaurantOutline, storefrontOutline, peopleCircleOutline
 } from 'ionicons/icons'
 import DomicilioView from '@/views/pedidos/PedidosView.vue'
 import MesasView from '@/views/pedidos/MesasView.vue'
@@ -97,11 +124,64 @@ function openAddProduct() {
   isOrderModalOpen.value = true
 }
 
+// mostrar cantidad pedidos
+const props = defineProps<{
+  counts: {
+    todos: number
+    pendientes: number
+    enCurso: number
+  }
+}>()
+
 </script>
 
 
 
 <style scoped>
+
+.tab-switcher {
+  display: flex;
+  width: 260px;
+  margin: 0.8rem auto;
+  background: #a5d86e; /* verde claro */
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 10px 0;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.tab-btn .icon {
+  font-size: 18px;
+}
+
+.active-left {
+  background: #86bc25; /* verde más oscuro */
+  color: white;
+}
+
+.active-right {
+  background: #86bc25; /* verde aún más oscuro */
+  color: white;
+}
+
+.inactive-left,
+.inactive-right {
+  background: transparent;
+  color: white;
+}
+
 
 
 

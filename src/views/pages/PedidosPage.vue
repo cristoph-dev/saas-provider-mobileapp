@@ -1,10 +1,10 @@
 <template>
   <ion-page>
-      <VentasHeader v-model:activeTab="activeTab" @new-order="openAddProduct"/>
+      <VentasHeader v-model:activeTab="activeTab"  :counts="counts" @new-order="openAddProduct"/>
 
       <ion-content>
         <keep-alive>
-          <component :is="currentComponent" @open-order="openOrder"/>
+          <component :is="currentComponent" @open-order="openOrder" @update-counts="counts = $event"/>
         </keep-alive>
       </ion-content>
 
@@ -12,6 +12,7 @@
         v-model:isOpen="isOrderModalOpen"
         :order="selectedOrder"
         :mode="modalMode"
+        @close="reloadPedidos"
       />  
   </ion-page>
 </template>
@@ -51,4 +52,18 @@ function openOrder(order: Delivery) {
   selectedOrder.value = order
   isOrderModalOpen.value = true
 }
+
+function reloadPedidos() {
+  // Forzar recargar desde el servicio
+  DeliveryService.save();
+}
+
+//emits al header
+
+const counts = ref({
+  todos: 0,
+  pendientes: 0,
+  enCurso: 0
+})
+
 </script>

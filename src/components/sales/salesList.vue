@@ -43,8 +43,8 @@
 
             <!-- MONTO -->
             <div class="amounts">
-              <div class="usd">{{ venta.totalUSD }}$</div>
-              <div class="bs">Bs. {{ venta.totalBs }}</div>
+              <div class="usd">{{ venta.totalUSD.toFixed(2) }}$</div>
+              <div class="bs">Bs. {{ Number(venta.totalBs).toFixed(2) }}</div>
             </div>
           </div>
 
@@ -62,17 +62,19 @@
 import { IonList, IonItem } from '@ionic/vue'
 import { ref } from 'vue'
 import { SalesService } from '@/mock/sales/salesService'
+import { sales } from "@/mock/sales/sales"
 import type { Sale } from '@/mock/sales/sales'
 
 const emit = defineEmits<{
   (e: 'open-sale', sale: Sale): void
 }>()
 
-const ventas = ref<Sale[]>(SalesService.getAll())
+const ventas = sales
 
 function abrirVenta(venta: Sale) {
   emit('open-sale', venta)
 }
+
 </script>
 
 <style scoped>

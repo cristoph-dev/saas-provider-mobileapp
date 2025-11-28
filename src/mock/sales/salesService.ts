@@ -10,7 +10,7 @@ export const SalesService = {
     return sales.find((s) => s.id === id);
   },
 
-  // REGISTRAR VENTA (sold)
+
   sell(
     orderId: number,
     totalUSD: number,

@@ -127,7 +127,7 @@
                             :detail="false"
                         >
                             <ion-thumbnail slot="start" class="thumb">
-                                <ion-img :src="getProductImage(product)"></ion-img>
+                                <ion-img :src="getProductImage(product.imageKey)"></ion-img>
                             </ion-thumbnail>
 
                             <ion-label>
@@ -238,58 +238,58 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonToolbar, IonTitle, IonHeader, IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonIcon, IonContent,IonAccordion, IonAccordionGroup, IonItem, IonLabel, IonBadge, IonInput, IonPopover, IonList, IonThumbnail, IonImg, IonModal, IonButtons, IonSearchbar, IonButton } from '@ionic/vue';
-import { searchSharp, menuOutline, ellipsisVertical, addOutline, chevronCollapseOutline, chevronExpandOutline, chevronDownOutline, chevronUpOutline, copyOutline, trashOutline, closeOutline} from 'ionicons/icons';
+import {
+  IonPage, IonToolbar, IonTitle, IonHeader, IonContent,
+  IonAccordion, IonAccordionGroup, IonItem, IonLabel, IonBadge,
+  IonInput, IonPopover, IonList, IonThumbnail, IonImg,
+  IonModal, IonButtons, IonSearchbar, IonButton
+} from '@ionic/vue';
+
+import {
+  searchSharp, menuOutline, ellipsisVertical, addOutline,
+  chevronCollapseOutline, chevronExpandOutline,
+  chevronDownOutline, chevronUpOutline,
+  copyOutline, trashOutline, closeOutline
+} from 'ionicons/icons';
+
 import { ref, computed } from 'vue';
 import type { Category, CategoryProduct } from '@/mock/menu/categories';
 import { CategoriesService } from '@/mock/menu/categoriesService';
 
-// puedes mapear estas a imageKey "arepa1"/"arepa2"
-import arepa1 from '@/assets/Arepa.png';
-import arepa2 from '@/assets/Arepa-2.png';
-import pizza1 from "@/assets/pizza-margarita.png";
-import pizza2 from "@/assets/pizza-pepperoni.png";
-import bebida1 from "@/assets/bebida1.png";
-
+// ⭐ MAPA CENTRALIZADO DE IMÁGENES
+import { getProductImage } from '@/mock/menu/productImages';
 
 const categories = ref<Category[]>(CategoriesService.getAll());
 
+// TOTAL DE PRODUCTOS
 const totalProducts = computed(() =>
   categories.value.reduce((sum, cat) => sum + cat.products.length, 0)
 );
 
+// AÑADIR CATEGORÍA
 function handleAddCategory() {
   CategoriesService.addCategory();
   categories.value = [...CategoriesService.getAll()];
 }
 
+// AÑADIR PRODUCTO NUEVO
 function addProduct(categoryId: number) {
   CategoriesService.addProduct(categoryId, {
     name: 'Nuevo producto',
     price: 0,
     currency: 'Bs',
-    imageKey: 'arepa1'
+    imageKey: 'noImage'   
   });
+
   categories.value = [...CategoriesService.getAll()];
 }
 
-function getProductImage(product: CategoryProduct) {
-  switch (product.imageKey) {
-    case 'pizza1':
-        return pizza1;
-    case 'pizza2':
-        return pizza2;
-    case 'bebida1':
-        return bebida1;
-    case 'arepa2':
-        return arepa2;
-    case 'arepa1':
-        return arepa1
-    default:
-        return arepa1;
-  }
+// OBTENER IMAGEN DEL PRODUCTO (limpio)
+function getProductImageSrc(product: CategoryProduct) {
+  return getProductImage(product.imageKey);
 }
 </script>
+
 
 <style scoped>
 ion-badge {

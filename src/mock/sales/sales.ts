@@ -1,3 +1,5 @@
+import { reactive } from "vue"
+
 export type SaleStatus = "sold" | "cancelled";
 export type SaleType = "local" | "takeaway";
 
@@ -11,7 +13,7 @@ export interface Sale {
   createdAt: string;
 }
 
-export const sales: Sale[] = [
+export const sales = reactive<Sale[]>([
   {
     id: 7,
     orderId: 8,
@@ -30,5 +32,4 @@ export const sales: Sale[] = [
     type: "takeaway", 
     createdAt: "18:30 - 11/11/2025"
   }
-];
-
+])

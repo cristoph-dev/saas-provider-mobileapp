@@ -20,11 +20,12 @@ export interface DeliveryProduct {
   price: number
   currency: "Bs" | "USD" | "VES"
   qty: number
+  imageKey: "arepa1" | "arepa2" | "pizza1" | "pizza2" | "bebida1" | "noImage"
 }
 
 export const deliveries = reactive<Delivery[]>([
   // #1
-  {    
+  {
     id: 1,
     deliveryType: 'Para llevar',
     date: '31/10/25',
@@ -41,14 +42,16 @@ export const deliveries = reactive<Delivery[]>([
         name: "Arepa de carne mechada",
         price: 22,
         currency: "Bs",
-        qty: 1
+        qty: 1,
+        imageKey: "arepa1"
       },
       {
         id: 2,
         name: "Coca Cola",
         price: 15,
         currency: "Bs",
-        qty: 2
+        qty: 2,
+        imageKey: "bebida1"
       }
     ]
   },
@@ -71,14 +74,16 @@ export const deliveries = reactive<Delivery[]>([
         name: "Pizza de pepperoni",
         price: 40,
         currency: "Bs",
-        qty: 1
+        qty: 1,
+        imageKey: "pizza1"
       },
       {
         id: 11,
         name: "Jugo natural",
         price: 18,
         currency: "Bs",
-        qty: 1
+        qty: 1,
+        imageKey: "noImage"
       }
     ]
   },
@@ -101,14 +106,16 @@ export const deliveries = reactive<Delivery[]>([
         name: "Arepa de queso",
         price: 20,
         currency: "Bs",
-        qty: 1
+        qty: 1,
+        imageKey: "arepa2"
       },
       {
         id: 2,
         name: "Coca Cola",
         price: 15,
         currency: "Bs",
-        qty: 1
+        qty: 1,
+        imageKey: "bebida1"
       }
     ]
   },
@@ -131,21 +138,24 @@ export const deliveries = reactive<Delivery[]>([
         name: "Pizza de pepperoni",
         price: 40,
         currency: "Bs",
-        qty: 1
+        qty: 1,
+        imageKey: "pizza1"
       },
       {
         id: 15,
         name: "Pizza napolitana",
         price: 35,
         currency: "Bs",
-        qty: 1
+        qty: 1,
+        imageKey: "pizza2"
       },
       {
         id: 2,
         name: "Coca Cola",
         price: 15,
         currency: "Bs",
-        qty: 1
+        qty: 1,
+        imageKey: "bebida1"
       }
     ]
   },
@@ -168,18 +178,21 @@ export const deliveries = reactive<Delivery[]>([
         name: "Te frío",
         price: 12,
         currency: "Bs",
-        qty: 1
+        qty: 1,
+        imageKey: "noImage"
       },
       {
         id: 4,
         name: "Galletas",
         price: 8,
         currency: "Bs",
-        qty: 1
+        qty: 1,
+        imageKey: "noImage"
       }
     ]
   },
-])
+]);
+
 
 // legacy code
 const pedidos = [

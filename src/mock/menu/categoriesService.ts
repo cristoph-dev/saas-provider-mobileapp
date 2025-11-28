@@ -39,7 +39,7 @@ export const CategoriesService = {
     const newId =
       allProducts.length > 0
         ? Math.max(...allProducts.map((p) => p.id)) + 1
-        : 1;
+        : 100;
 
     const newProduct: CategoryProduct = { id: newId, ...data };
     category.products.push(newProduct);
